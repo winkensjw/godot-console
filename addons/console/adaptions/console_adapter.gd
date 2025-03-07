@@ -5,7 +5,8 @@ static var print_to_godot = true
 
 static func init() -> void:
 	# initialize console here via Console.property
-	pass
+	# Allow mouse clicks through the main control node
+	Console.control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 
 func add_command(command_name : String, function : Callable, arguments = [], required: int = 0, description : String = "") -> void:
 	Console.add_command(command_name, function, arguments, required, description)
