@@ -82,6 +82,7 @@ func _enter_tree() -> void:
 	add_child(canvas_layer)
 	control.anchor_bottom = 1.0
 	control.anchor_right = 1.0
+	control.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	canvas_layer.add_child(control)
 	var style := StyleBoxFlat.new()
 	style.bg_color = Color("000000d7")
