@@ -1,6 +1,7 @@
 class_name ConsoleAdapter
 extends Node
 
+static var debug_enabled: bool = false
 static var print_to_godot: bool = true
 
 
