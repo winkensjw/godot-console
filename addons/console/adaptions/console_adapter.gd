@@ -13,33 +13,33 @@ extends Node
 
 ## Whether debug mode is enabled.
 ## When debug mode is enabled, debug messages will be printed to the console.
-static var m_debug_enabled: bool = false
+static var _debug_enabled: bool = false
 
 ## Whether to print messages to Godot's output.
 ## When enabled, messages will be printed to Godot's output in addition to the console.
-static var m_print_to_godot: bool = true
+static var _print_to_godot: bool = true
 
 
 ## Returns whether debug mode is enabled.
 static func get_debug_enabled() -> bool:
-	return m_debug_enabled
+	return _debug_enabled
 
 
 ## Sets whether debug mode is enabled.
 ## @param debug_enabled Whether to enable debug mode.
 static func set_debug_enabled(debug_enabled: bool) -> void:
-	m_debug_enabled = debug_enabled
+	_debug_enabled = debug_enabled
 
 
 ## Returns whether to print messages to Godot's output.
 static func get_print_to_godot() -> bool:
-	return m_print_to_godot
+	return _print_to_godot
 
 
 ## Sets whether to print messages to Godot's output.
 ## @param print_to_godot Whether to print messages to Godot's output.
 static func set_print_to_godot(print_to_godot: bool) -> void:
-	m_print_to_godot = print_to_godot
+	_print_to_godot = print_to_godot
 
 
 ## Initializes the console adapter.
