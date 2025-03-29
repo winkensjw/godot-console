@@ -42,6 +42,10 @@ static func set_print_to_godot(print_to_godot: bool) -> void:
 	_print_to_godot = print_to_godot
 
 
+static func set_hotkey(key: Key) -> void:
+	Console.hotkey = key
+
+
 ## Initializes the console adapter.
 ## This method should be called once when the game starts.
 static func init() -> void:

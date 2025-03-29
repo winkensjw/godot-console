@@ -3,6 +3,10 @@ extends Node
 var enabled := true
 var enable_on_release_build := false : set = set_enable_on_release_build
 var pause_enabled := false
+var hotkey := KEY_QUOTELEFT # ~ key.
+# FIXME these should be configurable
+var canvas_layer_layer := 127
+var console_opacity := 0.5
 
 signal console_opened
 signal console_closed
@@ -78,13 +82,13 @@ func _enter_tree() -> void:
 				add_input_history(line)
 
 	var canvas_layer := CanvasLayer.new()
-	canvas_layer.layer = 3
+	canvas_layer.layer = canvas_layer_layer
 	add_child(canvas_layer)
 	control.anchor_bottom = 1.0
 	control.anchor_right = 1.0
 	canvas_layer.add_child(control)
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color("000000d7")
+	style.bg_color = Color("000000d7", console_opacity)
 	rich_label.selection_enabled = true
 	rich_label.context_menu_enabled = true
 	rich_label.bbcode_enabled = true
@@ -135,11 +139,11 @@ func _ready() -> void:
 
 func _input(event : InputEvent) -> void:
 	if (event is InputEventKey):
-		if (event.get_physical_keycode_with_modifiers() == KEY_QUOTELEFT): # ~ key.
+		if (event.get_physical_keycode_with_modifiers() == hotkey): # ~ key.
 			if (event.pressed):
 				toggle_console()
 			get_tree().get_root().set_input_as_handled()
-		elif (event.physical_keycode == KEY_QUOTELEFT and event.is_command_or_control_pressed()): # Toggles console size or opens big console.
+		elif (event.physical_keycode == hotkey and event.is_command_or_control_pressed()): # Toggles console size or opens big console.
 			if (event.pressed):
 				if (control.visible):
 					toggle_size()
