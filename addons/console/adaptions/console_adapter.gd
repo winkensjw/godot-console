@@ -60,7 +60,7 @@ static func init() -> void:
 ## @param arguments An array of argument names for the command.
 ## @param required The number of required arguments for the command.
 ## @param description A description of the command.
-func add_command(command_name: String, function: Callable, arguments: Array = [], required: int = 0, description: String = "") -> void:
+static func add_command(command_name: String, function: Callable, arguments: Array = [], required: int = 0, description: String = "") -> void:
 	Console.add_command(command_name, function, arguments, required, description)
 
 
@@ -69,20 +69,20 @@ func add_command(command_name: String, function: Callable, arguments: Array = []
 ## @param function The function to call when the command is executed.
 ## @param arguments An array of argument names for the command.
 ## @param required The number of required arguments for the command.
-func add_hidden_command(command_name: String, function: Callable, arguments: Array = [], required: int = 0) -> void:
+static func add_hidden_command(command_name: String, function: Callable, arguments: Array = [], required: int = 0) -> void:
 	Console.add_hidden_command(command_name, function, arguments, required)
 
 
 ## Removes a command from the console.
 ## @param command_name The name of the command to remove.
-func remove_command(command_name: String) -> void:
+static func remove_command(command_name: String) -> void:
 	Console.remove_command(command_name)
 
 
 ## Adds an autocomplete list to a command.
 ## @param command_name The name of the command to add the autocomplete list to.
 ## @param param_list An array of strings to use for autocomplete.
-func add_command_autocomplete_list(command_name: String, param_list: PackedStringArray) -> void:
+static func add_command_autocomplete_list(command_name: String, param_list: PackedStringArray) -> void:
 	Console.add_command_autocomplete_list(command_name, param_list)
 
 
