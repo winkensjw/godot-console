@@ -390,11 +390,40 @@ func on_text_entered(new_text : String) -> void:
 			while (arguments.size() < console_command.arguments.size()):
 				arguments.append("")
 
-			console_command.function.callv(arguments)
+			# Prepare arguments with correct types
+			var typed_arguments : Array = []
+			for i in range(console_command.arguments.size()):
+				var arg_name := console_command.arguments[i]
+				var arg_value: String = arguments[i] if i < arguments.size() else "" # Handle missing arguments
+				# Try to convert to int, float, bool, or leave as string
+				var converted_value: Variant
+				if is_valid_integer(arg_value):
+					converted_value = arg_value.to_int()
+				elif is_valid_float(arg_value):
+					converted_value = arg_value.to_float()
+				elif arg_value.to_lower() == "true":
+					converted_value = true
+				elif arg_value.to_lower() == "false":
+					converted_value = false
+				else:
+					converted_value = arg_value
+				typed_arguments.append(converted_value)
+				
+			console_command.function.callv(typed_arguments)
 		else:
 			console_unknown_command.emit(text_command)
 			print_error("Command not found.")
 
+static func is_valid_integer(str: String) -> bool:
+	var regex = RegEx.new()
+	regex.compile("^[+-]?\\d+$")
+	return regex.search(str) != null
+
+
+static func is_valid_float(str: String) -> bool:
+	var regex = RegEx.new()
+	regex.compile("^[+-]?([0-9]+([.,][0-9]+)?|[.,][0-9]+)$")
+	return regex.search(str) != null
 
 func on_line_edit_text_changed(new_text : String) -> void:
 	reset_autocomplete()
