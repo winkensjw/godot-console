@@ -118,4 +118,4 @@ static func debug(text: Variant) -> void:
 static func _print_debug(text: Variant, print_godot: bool) -> void:
 	if not text is String:
 		text = str(text)
-	Console.print_line("[color=light_green]   DEBUG:[/color] %s" % text, print_godot)
+	Console.print_line("	   [color=light_green]   DEBUG:[/color] %s" % text, print_godot)
