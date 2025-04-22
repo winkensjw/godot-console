@@ -11,24 +11,16 @@
 class_name ConsoleAdapter
 extends Node
 
-## Whether debug mode is enabled.
-## When debug mode is enabled, debug messages will be printed to the console.
-static var _debug_enabled: bool = false
+enum LogLevel { NONE, DEBUG, INFO, WARN, ERROR }
 
 ## Whether to print messages to Godot's output.
 ## When enabled, messages will be printed to Godot's output in addition to the console.
 static var _print_to_godot: bool = true
 
+## List of log levels per logger. If not contained, _default_log_level is returned
+static var _log_levels: Dictionary[String, LogLevel]
 
-## Returns whether debug mode is enabled.
-static func get_debug_enabled() -> bool:
-	return _debug_enabled
-
-
-## Sets whether debug mode is enabled.
-## @param debug_enabled Whether to enable debug mode.
-static func set_debug_enabled(debug_enabled: bool) -> void:
-	_debug_enabled = debug_enabled
+static var _default_log_level: LogLevel = LogLevel.INFO
 
 
 ## Returns whether to print messages to Godot's output.
@@ -107,8 +99,6 @@ static func warning(text: Variant) -> void:
 ## Prints a debug message to the console.
 ## @param text The text to print.
 static func debug(text: Variant) -> void:
-	if not get_debug_enabled():
-		return
 	_print_debug(text, get_print_to_godot())
 
 
@@ -119,3 +109,19 @@ static func _print_debug(text: Variant, print_godot: bool) -> void:
 	if not text is String:
 		text = str(text)
 	Console.print_line("	   [color=light_green]   DEBUG:[/color] %s" % text, print_godot)
+
+
+static func get_log_level(name: String) -> LogLevel:
+	return _log_levels.get(name, _default_log_level)
+
+
+static func set_log_level(name: String, level: LogLevel):
+	_log_levels[name] = level
+
+
+static func reset_log_level(name: String):
+	_log_levels.erase(name)
+
+
+static func is_log_level(name: String, level: LogLevel):
+	return level >= get_log_level(name)
