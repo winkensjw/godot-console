@@ -17,6 +17,9 @@ enum LogLevel { NONE, DEBUG, INFO, WARN, ERROR }
 ## When enabled, messages will be printed to Godot's output in addition to the console.
 static var _print_to_godot: bool = true
 
+## Whether to print a timestamp for the messages
+static var _add_time_stamp: bool = true
+
 ## List of log levels per logger. If not contained, _default_log_level is returned
 static var _log_levels: Dictionary[String, LogLevel]
 
@@ -34,6 +37,12 @@ static func set_print_to_godot(print_to_godot: bool) -> void:
 	_print_to_godot = print_to_godot
 
 
+## Sets whether to print a timestamp for the messages
+static func set_add_time_stamp(add_time_stamp: bool) -> void:
+	_add_time_stamp = add_time_stamp
+
+
+## Sets what hotkey opens the console
 static func set_hotkey(key: Key) -> void:
 	Console.hotkey = key
 
@@ -81,24 +90,32 @@ static func add_command_autocomplete_list(command_name: String, param_list: Pack
 ## Prints an error message to the console.
 ## @param text The text to print.
 static func error(text: Variant) -> void:
+	if _add_time_stamp:
+		text = "[" + Time.get_datetime_string_from_system() + "] " + text
 	Console.print_error(text, get_print_to_godot())
 
 
 ## Prints an info message to the console.
 ## @param text The text to print.
 static func info(text: Variant) -> void:
+	if _add_time_stamp:
+		text = "[" + Time.get_datetime_string_from_system() + "] " + text
 	Console.print_info(text, get_print_to_godot())
 
 
 ## Prints a warning message to the console.
 ## @param text The text to print.
 static func warning(text: Variant) -> void:
+	if _add_time_stamp:
+		text = "[" + Time.get_datetime_string_from_system() + "] " + text
 	Console.print_warning(text, get_print_to_godot())
 
 
 ## Prints a debug message to the console.
 ## @param text The text to print.
 static func debug(text: Variant) -> void:
+	if _add_time_stamp:
+		text = "[" + Time.get_datetime_string_from_system() + "] " + text
 	_print_debug(text, get_print_to_godot())
 
 
@@ -108,6 +125,8 @@ static func debug(text: Variant) -> void:
 static func _print_debug(text: Variant, print_godot: bool) -> void:
 	if not text is String:
 		text = str(text)
+	if _add_time_stamp:
+		text = "[" + Time.get_datetime_string_from_system() + "] " + text
 	Console.print_line("	   [color=light_green]   DEBUG:[/color] %s" % text, print_godot)
 
 
